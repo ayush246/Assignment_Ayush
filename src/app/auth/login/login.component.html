@@ -1,0 +1,33 @@
+<div class="wrapper fadeInDown">
+  <div class="mainForm">
+    <h2 class="title">Log In</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()" autocomplete="off">
+      <input
+        type="text"
+        id="username"
+        class="fadeIn second"
+        name="username"
+        placeholder="Username"
+        formControlName="username"
+      />
+      <br />
+      <input
+        type="password"
+        id="password"
+        class="fadeIn third"
+        name="password"
+        placeholder="Password"
+        formControlName="password"
+      />
+      <br />
+      <button
+        type="submit"
+        class="fadeIn fourth"
+        value="Log In"
+        [disabled]="!loginForm.valid || disableButton"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</div>

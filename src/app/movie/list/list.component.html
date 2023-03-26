@@ -1,0 +1,52 @@
+<ng-container *ngIf="movieData">
+  <div class="pagination">
+    <div class="contentWrapper">
+    <div class="searchArea">
+      <input
+        type="search"
+        placeholder="Search movie title"
+        [(ngModel)]="searchValue"
+      />
+    </div>
+    <div *ngIf="movieData?.previous != null">
+      <span (click)="getMovieDetails(movieData?.previous)"
+        >View previous page</span
+      >
+    </div>
+    <div *ngIf="movieData?.next != null">
+      <span (click)="getMovieDetails(movieData?.next)">View next page</span>
+    </div>
+    </div>
+    <div class="darkModeSwitch" (click)="switchModes()">
+        <input type="checkbox" [checked]="darkMode$ | async" />
+        <p>Dark Mode</p>
+    </div>
+  </div>
+  <div *ngFor="let item of movieData?.results | filter : searchValue">
+    <div class="card">
+      <div class="headerCard">
+        <img
+          [src]="
+            'https://ui-avatars.com/api/?background=random&name=' + item.title
+          "
+        />
+        <h2>{{ item.title }}</h2>
+      </div>
+      <p>{{ item.description }}</p>
+      <p *ngIf="item.genres">Genre: {{ item.genres }}</p>
+    </div>
+  </div>
+  <div *ngIf="(movieData?.results | filter : searchValue).length == 0">
+    No Results Found
+  </div>
+</ng-container>
+<ng-container *ngIf="!movieData && !loadingData">
+  <div class="noRecord">
+    <h2>No Data Found</h2>
+    <button
+      (click)="getMovieDetails('https://demo.credy.in/api/v1/maya/movies/')"
+    >
+      Refresh
+    </button>
+  </div>
+</ng-container>
